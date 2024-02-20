@@ -37,10 +37,11 @@ const WelcomeScreen = ({ navigation }) => {
             <Text
               style={{
                 fontSize: 35,
-                color: 'white',
+                color: 'red',
+                fontWeight: 'bold',
                 textAlign: "center",
               }}>
-                Kick off
+                KickOff
             </Text>
   
 

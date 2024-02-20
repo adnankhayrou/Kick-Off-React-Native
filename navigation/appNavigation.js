@@ -23,7 +23,7 @@ const AppNavigation = () => {
     <Stack.Navigator>
       <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="Home" component={HomeScreen} options={{
-            headerTitle: 'Kick off',
+            headerTitle: 'KickOff',
             headerTitleStyle: {
               fontSize: 24,
               fontWeight: 'bold',
