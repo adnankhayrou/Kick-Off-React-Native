@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux'; 
-import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Avatar, Button, Card, Text } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
@@ -11,13 +11,18 @@ const LeftContent = () => {
     );
 }
 
+const handleMatchPress = (id) => {
+  // navigation.navigate('TeamScreen', { id });
+  console.log("presss", id )
+};
+
 const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigation }) => {
     
       const [data, setData] = useState([]);
     
       const options = {
         method: 'GET',
-        url: 'https://api.sportmonks.com/v3/football/fixtures',
+        url: 'https://api.sportmonks.com/v3/football/fixtures?include=participants',
         headers: {
           'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
         }
@@ -26,6 +31,8 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
        function navigateTo() {
           navigation.navigate('Item'); 
       }
+      
+      
     
       const fetchFootball = async () => {
         axios.request(options)
@@ -52,7 +59,7 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
           paddingVertical: 30,
         }}
       >
-        {Array.isArray(data) && data.map((item) => (
+        {/* {Array.isArray(data) && data.map((item) => (
           <TouchableOpacity key={item.id} onPress={() => navigateTo()}>
 
             <Card key={item.id} style={{ marginBottom: 10 }}>
@@ -91,7 +98,45 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
               </Card> 
               </TouchableOpacity>
 
-        ))}
+        ))} */}
+        {Array.isArray(data) && data.map((item) => (
+              <View key={item.id} style={{}}>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                    marginTop: 10,
+                  }}
+                >
+                  
+                  {item.participants.map((team, index) => (
+                    <React.Fragment key={team.id}>
+                      
+                      {index !== 0 && <Text >vs</Text>}
+                      
+
+                      <View key={team.id} style={{ alignItems: 'center' }}>
+                        <Image
+                          source={{ uri: team.image_path }}
+                          style={{ width: 50, height: 50 }}
+                        />
+                        <Text style={{}} >{team.name.substring(0, 3)}</Text>
+                      </View>
+                    </React.Fragment>
+                  ))}
+                </View>
+                <Button onPress={handleMatchPress(item.id)} >
+                  <Text>
+                  see details
+
+                  </Text>
+
+                  </Button>
+
+              </View>
+
+            ))}
       </ScrollView>
       
     </View>
