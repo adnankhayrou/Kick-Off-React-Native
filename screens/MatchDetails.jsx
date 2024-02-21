@@ -1,12 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
-import { Text } from 'react-native-paper'
+import { ActivityIndicator, Text } from 'react-native-paper'
 
 const MatchDetails = ({ route }) => {
   const { id } = route.params;
 
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const options = {
     method: 'GET',
@@ -22,6 +23,7 @@ const MatchDetails = ({ route }) => {
       const footballData = res.data.data;
       console.log('in the details', footballData);
       setData(footballData)
+      setIsLoading(false);
     })
     .catch(error => {
       console.error('Error occurred:', error.message);
@@ -30,18 +32,22 @@ const MatchDetails = ({ route }) => {
 
   useEffect(() => {
     fetchFootball();
-   
   }, []);
 
   return (
-    <View>
-        <Text>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      {isLoading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : (
+        <>
+          <Text>
             MatchDetails
-        </Text>
-        <Text>
-            ID: {id} ---
-            DATA ID: {data.id}
-        </Text>
+          </Text>
+          <Text>
+            ID: {id}
+          </Text>
+        </>
+      )}
     </View>
   )
 }

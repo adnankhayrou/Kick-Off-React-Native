@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux'; 
 import { View, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { Avatar, Button, Card, Text } from 'react-native-paper';
+import { ActivityIndicator, Avatar, Button, Card, Text } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 
@@ -14,6 +14,7 @@ const LeftContent = () => {
 const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigation }) => {
     
       const [data, setData] = useState([]);
+      const [isLoading, setIsLoading] = useState(true);
     
       const options = {
         method: 'GET',
@@ -39,6 +40,7 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
           const footballData = res.data.data;
           console.log(footballData);
           setData(footballData)
+          setIsLoading(false);
         })
         .catch(error => {
           console.error('Error occurred:', error.message);
@@ -52,6 +54,9 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
 
   return (
     <View style={styles.container}>
+      {isLoading ? (
+        <ActivityIndicator style={{marginTop: 380}} size="large" color="#0000ff" />
+      ) : (
       <ScrollView
         contentContainerStyle={{
           paddingHorizontal: 10,
@@ -138,7 +143,7 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
 
             ))}
       </ScrollView>
-      
+       )}
     </View>
   )
 }
@@ -148,7 +153,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'black',
     flex: 1,
-    justifyContent: 'flex-end',
   },
 });
 
