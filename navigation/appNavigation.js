@@ -4,6 +4,7 @@ import { View, Text } from 'react-native';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import HomeScreen from '../screens/HomeScreen';
 import { Ionicons } from '@expo/vector-icons';
+import Item from '../screens/Item';
 
 const Stack = createStackNavigator(); 
 
@@ -22,6 +23,7 @@ const AppNavigation = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="Item" component={Item} />
       <Stack.Screen name="Home" component={HomeScreen} options={{
             headerTitle: 'KickOff',
             headerTitleStyle: {
@@ -30,7 +32,7 @@ const AppNavigation = () => {
             },
             headerLeft: () => null,
              headerRight: () => (
-              <IconWithCount iconName="heart" count={3} />
+              <IconWithCount iconName="save" count={3} />
             ),}}/>
     </Stack.Navigator>
   );

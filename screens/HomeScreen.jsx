@@ -1,56 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, TouchableOpacity, Linking, Alert, StyleSheet } from 'react-native';
+import { connect } from 'react-redux'; 
+import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Avatar, Button, Card, Text } from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
-// import NavigationBar from '../Navigation/NavigationBar';
 
-const LeftContent = ({ image }) => {
+const LeftContent = () => {
     return (
-      <Avatar.Image size={70} style={{ marginTop: 20, backgroundColor: "red" }} source={{ uri: image }} />
+      <Avatar.Image size={70} style={{ marginTop: 50, backgroundColor: "gray" }} source={require('../assets/images/player1.png')} />
     );
 }
 
-const HomeScreen = () => {
-
-    // const addToFavorites = async (item) => {
-    //     try {
-    //       let oldData = JSON.parse(await AsyncStorage.getItem('favorites')) || [];
-    //       const isDuplicate = oldData.some(existingItem => existingItem && existingItem.nom === item.nom);
-    //       if (!isDuplicate) {
-    //         oldData.push(item);
-    //         await AsyncStorage.setItem('favorites', JSON.stringify(oldData));
-    //         console.log('Data added to favorites successfully.');
-    //         Alert.alert('Success', 'Pharmacy added to favorites successfully.');
-    //         loadFavorites()
-    //       } else {
-    //         console.log('This item is already in favorites.');
-    //         Alert.alert('Alert', 'Pharmacy is already in favorites.');
-    //       }
-    //     } catch (error) {
-    //       console.error('Error adding to favorites:', error);
-    //     }
-    //   };
-    
-      const handlePress = (url) => {
-        Linking.openURL(url);
-    };
+const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigation }) => {
     
       const [data, setData] = useState([]);
-    //   const [favorites, setFavorites] = useState([]);
     
       const options = {
         method: 'GET',
-        url: 'https://api.sportmonks.com/v3/football/leagues',
+        url: 'https://api.sportmonks.com/v3/football/fixtures',
         headers: {
           'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
         }
       };
+
+       function navigateTo() {
+          navigation.navigate('Item'); 
+      }
     
       const fetchFootball = async () => {
         axios.request(options)
         .then(res => {
           const footballData = res.data.data;
+          console.log(footballData);
           setData(footballData)
         })
         .catch(error => {
@@ -58,20 +39,9 @@ const HomeScreen = () => {
         });
       };
     
-    //   const loadFavorites = async () => {
-    //     try {
-    //       const storedFavorites = await AsyncStorage.getItem('favorites');
-    //       if (storedFavorites) {
-    //         setFavorites(JSON.parse(storedFavorites));
-    //       }
-    //     } catch (error) {
-    //       console.error('Error loading favorites:', error);
-    //     }
-    //   };
-    
       useEffect(() => {
         fetchFootball();
-        // loadFavorites();
+       
       }, []);
 
   return (
@@ -83,49 +53,61 @@ const HomeScreen = () => {
         }}
       >
         {Array.isArray(data) && data.map((item) => (
-          <TouchableOpacity key={item.id} onPress={() => handlePress(item.image_path)}>
-            <Card style={{ marginBottom: 10 }}>
-            {/* {favorites.some(favorite => favorite.name === item.name) && (
-                <Card.Actions>
-                    <Avatar.Icon
-                      size={20}
-                      icon="heart"
-                      style={{
-                        backgroundColor: 'red',
-                        marginTop: 5,
-                        marginEnd: 10
-                      }}
-                    />
-                </Card.Actions>
-              )} */}
+          <TouchableOpacity key={item.id} onPress={() => navigateTo()}>
+
+            <Card key={item.id} style={{ marginBottom: 10 }}>
+
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                {isFavorite ? (
+                  <Ionicons onPress={() => removeFromFavorites(item)} name={'save'} size={25} color="red" style={{ marginRight: 8, marginTop: 5 }} />
+
+                  // <Button
+                  //   style={{ backgroundColor: 'red' }}
+                  //   title="Remove from Favorites"
+                  //   onPress={() => removeFromFavorites(item)}
+                  //   icon={() => <Ionicons name="heart" size={24} color="white" />} 
+                  // />
+                ) : (
+                  <Ionicons onPress={() => addToFavorites(item)} name={'save'} size={25} color="black" style={{ marginRight: 8, marginTop: 5 }} />
+                  // <Button 
+                  //   style={{backgroundColor:'black'}}
+                  //   title="Add to Favorites"
+                  //   onPress={() => addToFavorites(item)}
+                  //   icon={() => <Ionicons name="heart" size={24} color="white" />}
+                  // />
+                )}
+              </View>
+           
               <Card.Title
                 titleStyle={{ marginLeft: 40 }}
                 title={item.name}
-                subtitle={item.name}
+                subtitle={item.type}
                 subtitleStyle={{ marginLeft: 40 }}
                 titleVariant="bodyLarge"
-                left={() => <LeftContent image={item.image_path} />}
-              />
-              <Text style={{ marginLeft: 113 }}>{item.name} </Text>
-              {/* <Card.Actions>
-                <Button icon="plus" mode="outlined" textColor="green" onPress={() => addToFavorites(item)}>
-                  Add to favorite
-                </Button>
-              </Card.Actions> */}
-            </Card>
-          </TouchableOpacity>
+                left={LeftContent}
+                />
+              <Text style={{ marginLeft: 113, marginBottom:10 }}>{item.starting_at} </Text>
+              <Text style={{ marginLeft: 113 }}>{item.starting} </Text>
+              </Card> 
+              </TouchableOpacity>
+
         ))}
       </ScrollView>
-      {/* <NavigationBar navigation={navigation} /> */}
+      
     </View>
   )
 }
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'flex-end',
-    },
-  });
 
-export default HomeScreen
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addToFavorites: (item) => dispatch({ type: 'ADD_FAVORITE', payload: item }),
+  removeFromFavorites: (item) => dispatch({ type: 'REMOVE_FAVORITE', payload: item })
+});
+export default connect(null, mapDispatchToProps)(HomeScreen); 
