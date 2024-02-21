@@ -11,11 +11,6 @@ const LeftContent = () => {
     );
 }
 
-const handleMatchPress = (id) => {
-  // navigation.navigate('TeamScreen', { id });
-  console.log("presss", id )
-};
-
 const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigation }) => {
     
       const [data, setData] = useState([]);
@@ -32,6 +27,10 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
           navigation.navigate('Item'); 
       }
       
+      const handleMatchPress = (id) => {
+        navigation.navigate('MatchDetails', { id });
+        console.log("presss", id )
+      };
       
     
       const fetchFootball = async () => {
@@ -100,41 +99,42 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
 
         ))} */}
         {Array.isArray(data) && data.map((item) => (
-              <View key={item.id} style={{}}>
-
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
-                    marginTop: 10,
-                  }}
-                >
-                  
-                  {item.participants.map((team, index) => (
-                    <React.Fragment key={team.id}>
-                      
-                      {index !== 0 && <Text >vs</Text>}
-                      
-
-                      <View key={team.id} style={{ alignItems: 'center' }}>
-                        <Image
-                          source={{ uri: team.image_path }}
-                          style={{ width: 50, height: 50 }}
-                        />
-                        <Text style={{}} >{team.name.substring(0, 3)}</Text>
-                      </View>
-                    </React.Fragment>
-                  ))}
-                </View>
-                <Button onPress={handleMatchPress(item.id)} >
-                  <Text>
-                  see details
-
-                  </Text>
-
-                  </Button>
-
-              </View>
+             <View key={item.id} style={{backgroundColor:'white', borderWidth: 1, borderColor: 'black', borderStyle: 'solid', borderRadius: 10, marginBottom:10}}>
+             <View
+               style={{
+                 flexDirection: 'row',
+                 justifyContent: 'space-around',
+                 marginTop: 10,
+               }}
+             >
+               
+               {item.participants.map((team, index) => (
+                 <React.Fragment key={team.id}>
+                   
+                   
+                   {index !== 0 && <Text style={{ marginTop:30, fontWeight: 'bold', fontSize:22 }}>vs</Text>}
+           
+                   <View key={team.id} style={{ alignItems: 'center', marginTop:10 }}>
+                     <Image
+                       source={{ uri: team.image_path }}
+                       style={{ width: 50, height: 50 }}
+                     />
+                     <Text style={{fontWeight: 'bold', fontSize:16}} >{team.name.substring(0, 3)}</Text>
+                   </View>
+                 </React.Fragment>
+               ))}
+             </View>
+           
+             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+               <Text>{item.starting_at}</Text>
+             </View>
+           
+             <Button onPress={() => handleMatchPress(item.id)}>
+               <Text style={{fontWeight: 'bold', fontSize:20}}>see details</Text>
+             </Button>
+           
+           </View>
+           
 
             ))}
       </ScrollView>
@@ -146,6 +146,7 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'black',
     flex: 1,
     justifyContent: 'flex-end',
   },

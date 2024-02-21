@@ -5,6 +5,7 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import HomeScreen from '../screens/HomeScreen';
 import { Ionicons } from '@expo/vector-icons';
 import Item from '../screens/Item';
+import MatchDetails from '../screens/MatchDetails';
 
 const Stack = createStackNavigator(); 
 
@@ -23,6 +24,7 @@ const AppNavigation = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="MatchDetails" component={MatchDetails} />
       <Stack.Screen name="Item" component={Item} />
       <Stack.Screen name="Home" component={HomeScreen} options={{
             headerTitle: 'KickOff',

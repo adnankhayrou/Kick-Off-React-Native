@@ -37,7 +37,7 @@ const WelcomeScreen = ({ navigation }) => {
             <Text
               style={{
                 fontSize: 35,
-                color: 'red',
+                color: 'white',
                 fontWeight: 'bold',
                 textAlign: "center",
               }}>
