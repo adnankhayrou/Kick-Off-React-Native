@@ -142,7 +142,7 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
                        source={{ uri: team.image_path }}
                        style={{ width: 50, height: 50 }}
                      />
-                     <Text style={{fontWeight: 'bold', fontSize:16}} >{team.name.substring(0, 3)}</Text>
+                     <Text style={{fontWeight: 'bold', fontSize:16}} >{team.short_code}</Text>
                    </View>
                  </React.Fragment>
                ))}

@@ -11,7 +11,8 @@ const WelcomeScreen = ({ navigation }) => {
 
   function navigateTo() {
     setTimeout(() => {
-      navigation.navigate('Home');
+      // navigation.navigate('Home');
+      navigation.navigate('Players');
     }, 6000);
   }
 

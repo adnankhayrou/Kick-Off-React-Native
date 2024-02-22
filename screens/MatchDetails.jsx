@@ -8,10 +8,11 @@ const MatchDetails = ({ route }) => {
 
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  
 
   const options = {
     method: 'GET',
-    url: `https://api.sportmonks.com/v3/football/fixtures/${id}?include=participants`,
+    url: `https://api.sportmonks.com/v3/football/fixtures/${id}?include=league;participants;venue;league`,
     headers: {
       'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
     }
@@ -54,7 +55,7 @@ const MatchDetails = ({ route }) => {
                         source={{ uri: team.image_path }}
                         style={{ width: 70, height: 70 }}
                       />
-                      <Text style={{fontWeight: 'bold', fontSize:20, color:'white'}} >{team.name}</Text>
+                      <Text style={{fontWeight: 'bold', fontSize:20, color:'white'}} >{team.short_code}</Text>
                     </View>
                   </React.Fragment>
                 ))}
@@ -72,7 +73,31 @@ const MatchDetails = ({ route }) => {
                 Match Details
               </Text>
             </View>
+
     
+            <Text style={{fontWeight: 'bold', fontSize:20, color:'black', marginStart:10}} >Participants : </Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20}}>       
+                {data.participants.map((team) => (
+                  <React.Fragment key={team.id}>
+            
+                    <View key={team.id} style={{ alignItems: 'center', marginTop:5 }}>
+                      <Text style={{fontWeight: 'bold', fontSize:20, color:'black'}} >{team.name}</Text>
+                      <Text style={{fontWeight: 'bold', fontSize:20, color:'black'}} >{team.gender}</Text>
+                    </View>
+
+                  </React.Fragment>
+                ))}
+              </View>
+
+            <Text style={{fontWeight: 'bold', fontSize:20, color:'black', marginStart:10, marginTop:10}} >venue : </Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20}}>       
+              <View key={data.venue.id} style={{ alignItems: 'center', marginTop:5 }}>
+                <Text style={{fontWeight: 'bold', fontSize:20, color:'black'}} >{data.venue.name}</Text>
+                <Text style={{fontWeight: 'bold', fontSize:20, color:'black'}} >{data.venue.surface}</Text>
+                <Text style={{fontWeight: 'bold', fontSize:20, color:'black'}} >{data.venue.address}</Text>
+              </View>
+            </View>
+
         </View>
       )}
     </View>

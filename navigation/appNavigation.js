@@ -6,6 +6,8 @@ import HomeScreen from '../screens/HomeScreen';
 import { Ionicons } from '@expo/vector-icons';
 import Item from '../screens/Item';
 import MatchDetails from '../screens/MatchDetails';
+import PlayersScreen from '../screens/PlayersScreen';
+import PlayerDetails from '../screens/PlayerDetails';
 
 const Stack = createStackNavigator(); 
 
@@ -25,8 +27,19 @@ const AppNavigation = () => {
     <Stack.Navigator>
       <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="MatchDetails" component={MatchDetails} />
+      <Stack.Screen name="PlayerDetails" component={PlayerDetails} />
       <Stack.Screen name="Item" component={Item} />
       <Stack.Screen name="Home" component={HomeScreen} options={{
+            headerTitle: 'KickOff',
+            headerTitleStyle: {
+              fontSize: 24,
+              fontWeight: 'bold',
+            },
+            headerLeft: () => null,
+             headerRight: () => (
+              <IconWithCount iconName="save" count={3} />
+            ),}}/>
+      <Stack.Screen name="Players" component={PlayersScreen} options={{
             headerTitle: 'KickOff',
             headerTitleStyle: {
               fontSize: 24,
