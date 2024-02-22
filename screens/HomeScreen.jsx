@@ -16,9 +16,17 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
       const [data, setData] = useState([]);
       const [isLoading, setIsLoading] = useState(true);
     
-      const options = {
+      const matchOptions = {
         method: 'GET',
         url: 'https://api.sportmonks.com/v3/football/fixtures?include=participants',
+        headers: {
+          'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
+        }
+      };
+
+      const filterOptions = {
+        method: 'GET',
+        url: 'https://api.sportmonks.com/v3/football/fixtures/head-to-head/2650/86?include=participants',
         headers: {
           'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
         }
@@ -34,8 +42,24 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
       };
       
     
+      const felterFootball = async () => {
+        console.log('hello');
+        setIsLoading(true);
+        axios.request(filterOptions)
+        .then(res => {
+          const footballData = res.data.data;
+          console.log(footballData);
+          setData(footballData)
+          setIsLoading(false);
+        })
+        .catch(error => {
+          console.error('Error occurred:', error.message);
+        });
+      };
+
       const fetchFootball = async () => {
-        axios.request(options)
+        setIsLoading(true);
+        axios.request(matchOptions)
         .then(res => {
           const footballData = res.data.data;
           console.log(footballData);
@@ -49,62 +73,56 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
     
       useEffect(() => {
         fetchFootball();
-       
       }, []);
 
   return (
     <View style={styles.container}>
+
+      <View style={{ display:"flex", flexDirection:"row" , backgroundColor: 'white'}}>
+        <TouchableOpacity 
+          style={{ 
+            width:'30%',
+            backgroundColor: 'gray', 
+            borderRadius: 12,
+            margin: 2,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginStart: 10
+           
+          }} 
+          onPress={() => fetchFootball()}
+        >
+          <Text style={{ fontWeight: 'bold', color:'white' }}>All Matches</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={{ 
+            width:'30%',
+            backgroundColor: 'gray', 
+            borderRadius:12,
+            padding: 7,
+            margin: 2,
+            alignItems: 'center',
+            justifyContent: 'center',
+          
+          }} 
+          onPress={() => felterFootball()}
+        >
+          <Text style={{ fontWeight: 'bold', color:'white' }}>Live Matches</Text>
+        </TouchableOpacity>
+      </View>
+      
       {isLoading ? (
-        <ActivityIndicator style={{marginTop: 380}} size="large" color="#0000ff" />
+        <ActivityIndicator style={{marginTop: 300}} size="large" color="#0000ff" />
       ) : (
+        
       <ScrollView
         contentContainerStyle={{
           paddingHorizontal: 10,
-          paddingVertical: 30,
+          paddingVertical: 5,
         }}
       >
-        {/* {Array.isArray(data) && data.map((item) => (
-          <TouchableOpacity key={item.id} onPress={() => navigateTo()}>
-
-            <Card key={item.id} style={{ marginBottom: 10 }}>
-
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                {isFavorite ? (
-                  <Ionicons onPress={() => removeFromFavorites(item)} name={'save'} size={25} color="red" style={{ marginRight: 8, marginTop: 5 }} />
-
-                  // <Button
-                  //   style={{ backgroundColor: 'red' }}
-                  //   title="Remove from Favorites"
-                  //   onPress={() => removeFromFavorites(item)}
-                  //   icon={() => <Ionicons name="heart" size={24} color="white" />} 
-                  // />
-                ) : (
-                  <Ionicons onPress={() => addToFavorites(item)} name={'save'} size={25} color="black" style={{ marginRight: 8, marginTop: 5 }} />
-                  // <Button 
-                  //   style={{backgroundColor:'black'}}
-                  //   title="Add to Favorites"
-                  //   onPress={() => addToFavorites(item)}
-                  //   icon={() => <Ionicons name="heart" size={24} color="white" />}
-                  // />
-                )}
-              </View>
-           
-              <Card.Title
-                titleStyle={{ marginLeft: 40 }}
-                title={item.name}
-                subtitle={item.type}
-                subtitleStyle={{ marginLeft: 40 }}
-                titleVariant="bodyLarge"
-                left={LeftContent}
-                />
-              <Text style={{ marginLeft: 113, marginBottom:10 }}>{item.starting_at} </Text>
-              <Text style={{ marginLeft: 113 }}>{item.starting} </Text>
-              </Card> 
-              </TouchableOpacity>
-
-        ))} */}
         {Array.isArray(data) && data.map((item) => (
-             <View key={item.id} style={{backgroundColor:'white', borderWidth: 1, borderColor: 'black', borderStyle: 'solid', borderRadius: 10, marginBottom:10}}>
+             <View key={item.id} style={{backgroundColor: 'white', borderBottomWidth: 1, borderBottomColor: 'gray', borderRadius: 10, marginBottom:10}}>
              <View
                style={{
                  flexDirection: 'row',
@@ -130,7 +148,7 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
                ))}
              </View>
            
-             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+             <View style={{ alignItems: 'center', justifyContent: 'center' , marginBottom: 8}}>
                <Text>{item.starting_at}</Text>
              </View>
            
@@ -151,7 +169,7 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'black',
+    backgroundColor: 'white',
     flex: 1,
   },
 });
