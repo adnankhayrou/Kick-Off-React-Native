@@ -1,11 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { ActivityIndicator, Button, Text } from 'react-native-paper'
+import { Image, ScrollView, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, Button, Searchbar, Text } from 'react-native-paper'
 
 const PlayersScreen = ({navigation}) => {
     const [data, setData] = useState([]);
-      const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
     
       const playerOptions = {
         method: 'GET',
@@ -17,7 +18,7 @@ const PlayersScreen = ({navigation}) => {
 
       const filterOptions = {
         method: 'GET',
-        url: 'https://api.sportmonks.com/v3/football/fixtures/head-to-head/2650/86?include=participants',
+        url: `https://api.sportmonks.com/v3/football/players/search/${searchQuery}`,
         headers: {
           'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
         }
@@ -31,9 +32,10 @@ const PlayersScreen = ({navigation}) => {
       
     
       const playerSearch = async () => {
-        console.log('hello');
+        if(searchQuery.length > 0){
+            console.log('hello');
         setIsLoading(true);
-        axios.request(playerSearch)
+        await axios.request(filterOptions)
         .then(res => {
           const footballData = res.data.data;
           console.log(footballData);
@@ -43,6 +45,7 @@ const PlayersScreen = ({navigation}) => {
         .catch(error => {
           console.error('Error occurred:', error.message);
         });
+        }
       };
 
       const fetchPlayers = async () => {
@@ -67,37 +70,8 @@ const PlayersScreen = ({navigation}) => {
 
     <View style={styles.container}>
 
-      <View style={{ display:"flex", flexDirection:"row" , backgroundColor: 'white'}}>
-        <TouchableOpacity 
-          style={{ 
-            width:'30%',
-            backgroundColor: 'gray', 
-            borderRadius: 12,
-            margin: 2,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginStart: 10
-           
-          }} 
-          onPress={() => fetchFootball()}
-        >
-          <Text style={{ fontWeight: 'bold', color:'white' }}>All Matches</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-          style={{ 
-            width:'40%',
-            backgroundColor: 'gray', 
-            borderRadius:12,
-            padding: 7,
-            margin: 2,
-            alignItems: 'center',
-            justifyContent: 'center',
-          
-          }} 
-          onPress={() => felterFootball()}
-        >
-          <Text style={{ fontWeight: 'bold', color:'white' }}>Head To Head Matches</Text>
-        </TouchableOpacity>
+      <View style={{backgroundColor: 'white', margin:10}}>
+        <Searchbar  placeholder="Search" onChange={playerSearch} onChangeText={(text) => setSearchQuery(text)}  value={searchQuery}/>
       </View>
       
       {isLoading ? (
@@ -126,7 +100,7 @@ const PlayersScreen = ({navigation}) => {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
-                backgroundColor:'black'
+                backgroundColor:'gray'
               }}
             >
               <View style={{ width: "50%" }}>
@@ -158,23 +132,14 @@ const PlayersScreen = ({navigation}) => {
                   height: "70%",
                 }}
               ></View>
-      
-              <View style={{ width: "40%" }}>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontSize: 15,
-                    marginRight: 10,
-                    textAlign: "center",
-                  }}>
-      
-                  ---->
-                </Text>
-                
-                <Text style={{ color: 'white', fontSize: 15, marginLeft: 30 }}>
-                  See Details
-                </Text>
-              </View>
+              <Button  onPress={() => handlePlayerPress(item.id)}>
+                <View style={{ width: "40%" }}>
+                    <Text style={{ color: 'white', marginRight: 20, fontWeight: 'bold' }}>
+                    See Details
+                    </Text>
+                </View>
+              </Button>
+
             </View>
           </View>
             ))}

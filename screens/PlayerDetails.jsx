@@ -2,7 +2,8 @@ import React from 'react'
 import { Image, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 
-const PlayerDetails = () => {
+const PlayerDetails = ({ route }) => {
+  const { id } = route.params;
   return (
     <View>
       <View
@@ -38,7 +39,7 @@ const PlayerDetails = () => {
               style={{ width: 30, height: 30, borderRadius: 20 }}
             />
             <Text style={{ color: 'white', fontSize: 15, marginLeft: 20 }}>
-              PSG
+              PSG {id}
             </Text>
           </View>
         </View>
