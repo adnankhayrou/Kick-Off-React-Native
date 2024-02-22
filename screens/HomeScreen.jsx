@@ -96,7 +96,7 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
         </TouchableOpacity>
         <TouchableOpacity 
           style={{ 
-            width:'30%',
+            width:'40%',
             backgroundColor: 'gray', 
             borderRadius:12,
             padding: 7,
@@ -107,7 +107,7 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
           }} 
           onPress={() => felterFootball()}
         >
-          <Text style={{ fontWeight: 'bold', color:'white' }}>Live Matches</Text>
+          <Text style={{ fontWeight: 'bold', color:'white' }}>Head To Head Matches</Text>
         </TouchableOpacity>
       </View>
       
@@ -156,9 +156,7 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
                <Text style={{fontWeight: 'bold', fontSize:20}}>see details</Text>
              </Button>
            
-           </View>
-           
-
+           </View> 
             ))}
       </ScrollView>
        )}

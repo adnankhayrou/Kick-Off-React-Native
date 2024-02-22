@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { Image, ImageBackground, StyleSheet, View } from 'react-native'
 import { ActivityIndicator, Text } from 'react-native-paper'
 
 const MatchDetails = ({ route }) => {
@@ -35,21 +35,56 @@ const MatchDetails = ({ route }) => {
   }, []);
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={styles.container}>
       {isLoading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
-        <>
-          <Text>
-            MatchDetails
-          </Text>
-          <Text>
-            ID: {id}
-          </Text>
-        </>
+        <View >
+          
+          <ImageBackground source={require("../assets/images/stadium.jpg")} style={{ margin:5, borderRadius: 10, overflow: 'hidden'}}>
+            <View key={data.id} style={{marginBottom:10, borderRadius: 20}}>
+
+              <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20}}>       
+                {data.participants.map((team, index) => (
+                  <React.Fragment key={team.id}>
+                    {index !== 0 && <Text style={{ marginTop:30, fontWeight: 'bold', fontSize:30, color:'blue' }}>vs</Text>}
+            
+                    <View key={team.id} style={{ alignItems: 'center', marginTop:10 }}>
+                      <Image
+                        source={{ uri: team.image_path }}
+                        style={{ width: 70, height: 70 }}
+                      />
+                      <Text style={{fontWeight: 'bold', fontSize:20, color:'white'}} >{team.name}</Text>
+                    </View>
+                  </React.Fragment>
+                ))}
+              </View>
+            
+              <View style={{ alignItems: 'center', justifyContent: 'center' , marginBottom: 6, marginTop: 10}}>
+                <Text style={{fontWeight: 'bold', fontSize:20, color:'white'}}>{data.starting_at}</Text>
+              </View>
+
+            </View> 
+           </ImageBackground>
+
+            <View style={{alignItems: 'center', justifyContent: 'center' , marginBottom: 8}}>
+              <Text style={{ marginTop:20, fontWeight: 'bold', fontSize:20 }}>
+                Match Details
+              </Text>
+            </View>
+    
+        </View>
       )}
     </View>
   )
 }
+
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    flex: 1,
+  },
+});
 
 export default MatchDetails
