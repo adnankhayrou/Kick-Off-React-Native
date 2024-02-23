@@ -2,14 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux'; 
 import { View, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { ActivityIndicator, Avatar, Button, Card, Text } from 'react-native-paper';
-import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
-
-const LeftContent = () => {
-    return (
-      <Avatar.Image size={70} style={{ marginTop: 50, backgroundColor: "gray" }} source={require('../assets/images/player1.png')} />
-    );
-}
 
 const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigation }) => {
     
@@ -31,10 +24,6 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
           'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
         }
       };
-
-       function navigateTo() {
-          navigation.navigate('Item'); 
-      }
       
       const handleMatchPress = (id) => {
         navigation.navigate('MatchDetails', { id });

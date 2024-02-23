@@ -46,7 +46,7 @@ const AppNavigation = () => {
 
 const MainTabs = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator >
       <Tab.Screen name="Matches" component={HomeScreen} options={{
         headerShown: false,
         tabBarIcon: ({ color, size }) => (
