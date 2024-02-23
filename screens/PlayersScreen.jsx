@@ -71,7 +71,7 @@ const PlayersScreen = ({navigation}) => {
     <View style={styles.container}>
 
       <View style={{backgroundColor: 'white', margin:10}}>
-        <Searchbar  placeholder="Search" onChange={playerSearch} onChangeText={(text) => setSearchQuery(text)}  value={searchQuery}/>
+        <Searchbar placeholder="Search" onChange={playerSearch} onChangeText={setSearchQuery}  value={searchQuery}/>
       </View>
       
       {isLoading ? (
