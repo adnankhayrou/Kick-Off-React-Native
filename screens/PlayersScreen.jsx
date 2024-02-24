@@ -8,70 +8,69 @@ const PlayersScreen = ({navigation}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     
-      const playerOptions = {
-        method: 'GET',
-        url: 'https://api.sportmonks.com/v3/football/players',
-        headers: {
-          'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
-        }
-      };
+    const playerOptions = {
+      method: 'GET',
+      url: 'https://api.sportmonks.com/v3/football/players',
+      headers: {
+        'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
+      }
+    };
 
-      const filterOptions = {
-        method: 'GET',
-        url: `https://api.sportmonks.com/v3/football/players/search/${searchQuery}`,
-        headers: {
-          'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
-        }
-      };
+    const filterOptions = {
+      method: 'GET',
+      url: `https://api.sportmonks.com/v3/football/players/search/${searchQuery}`,
+      headers: {
+        'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
+      }
+    };
 
-      
-      const handlePlayerPress = (id) => {
-        navigation.navigate('PlayerDetails', { id });
-        console.log("presss", id )
-      };
-      
+    const handlePlayerPress = (id) => {
+      navigation.navigate('PlayerDetails', { id });
+      // console.log("presss", id )
+    };
     
-      const playerSearch = async () => {
-        if(searchQuery.length > 0){
-            console.log('hello');
-        setIsLoading(true);
-        await axios.request(filterOptions)
-        .then(res => {
-          const footballData = res.data.data;
-          console.log(footballData);
-          setData(footballData)
-          setIsLoading(false);
-        })
-        .catch(error => {
-          console.error('Error occurred:', error.message);
-        });
-        }
-      };
+  
+    const playerSearch = async () => {
+      if(searchQuery.length > 0){
+          // console.log('hello');
+      setIsLoading(true);
+      await axios.request(filterOptions)
+      .then(res => {
+        const footballData = res.data.data;
+        // console.log(footballData);
+        setData(footballData)
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.error('Error occurred:', error.message);
+      });
+      }
+    };
 
-      const fetchPlayers = async () => {
-        setIsLoading(true);
-        axios.request(playerOptions)
-        .then(res => {
-          const footballData = res.data.data;
-          console.log(footballData);
-          setData(footballData)
-          setIsLoading(false);
-        })
-        .catch(error => {
-          console.error('Error occurred:', error.message);
-        });
-      };
-    
-      useEffect(() => {
-        fetchPlayers();
-      }, []);
+    const fetchPlayers = async () => {
+      setIsLoading(true);
+      axios.request(playerOptions)
+      .then(res => {
+        const footballData = res.data.data;
+        // console.log(footballData);
+        setData(footballData)
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.error('Error occurred:', error.message);
+      });
+    };
+  
+    useEffect(() => {
+      fetchPlayers();
+    }, []);
 
-  return (
+return (
 
     <View style={styles.container}>
 
-      <View style={{backgroundColor: 'white', margin:10}}>
-        <Searchbar placeholder="Search" onChange={playerSearch} onChangeText={setSearchQuery}  value={searchQuery}/>
+      <View style={{backgroundColor: 'white', padding:10}}>
+        <Searchbar placeholder="Search" onChange={playerSearch} onChangeText={setSearchQuery}  value={searchQuery} />
       </View>
       
       {isLoading ? (

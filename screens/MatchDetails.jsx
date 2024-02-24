@@ -96,14 +96,12 @@ const MatchDetails = ({ route, navigation }) => {
           >
 
            <View style={{ width: "90%" }}>
-              {/* Player Informations Header */}
               <View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
                 <Text style={{ marginTop: 20, fontWeight: 'bold', fontSize: 20 }}>
                   Match Information
                 </Text>
               </View>
 
-              {/* Individual Player Information Items */}
               {[
                 { label: "League", value: data.league.name },
                 { label: "League Sub Type", value: data.league.sub_type },
@@ -116,7 +114,6 @@ const MatchDetails = ({ route, navigation }) => {
                 { label: "Venue Surface", value: data.venue.surface },
               ].map((item, index) => (
                 <View key={index} style={{ marginVertical: 8 }}>
-                  {/* Individual Player Information Item */}
                   <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 5 }}>
                     <Text style={{ fontWeight: 'bold', color: 'black', fontSize: 15 }}>
                       {item.label}
@@ -129,7 +126,6 @@ const MatchDetails = ({ route, navigation }) => {
                 </View>
               ))}
 
-              {/* Button to See All Players */}
               <View style={{ marginVertical: 8, padding: 5 }}>
                 <TouchableOpacity
                   style={{

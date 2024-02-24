@@ -1,68 +1,68 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux'; 
+import React, { useContext, useEffect, useState } from 'react';
 import { View, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { ActivityIndicator, Avatar, Button, Card, Text } from 'react-native-paper';
+import { ActivityIndicator, Button, Text } from 'react-native-paper';
+import {DataContext} from '../context/DataProvider';
 import axios from 'axios';
 
-const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigation }) => {
-    
-      const [data, setData] = useState([]);
-      const [isLoading, setIsLoading] = useState(true);
-    
-      const matchOptions = {
-        method: 'GET',
-        url: 'https://api.sportmonks.com/v3/football/fixtures?include=participants',
-        headers: {
-          'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
-        }
-      };
+const HomeScreen = ({ navigation }) => {
+  const { addToFavorite, loadFavorites} = useContext(DataContext);
 
-      const filterOptions = {
-        method: 'GET',
-        url: 'https://api.sportmonks.com/v3/football/fixtures/head-to-head/2650/86?include=participants',
-        headers: {
-          'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
-        }
-      };
-      
-      const handleMatchPress = (id) => {
-        navigation.navigate('MatchDetails', { id });
-        console.log("presss", id )
-      };
-      
-    
-      const felterFootball = async () => {
-        console.log('hello');
-        setIsLoading(true);
-        axios.request(filterOptions)
-        .then(res => {
-          const footballData = res.data.data;
-          console.log(footballData);
-          setData(footballData)
-          setIsLoading(false);
-        })
-        .catch(error => {
-          console.error('Error occurred:', error.message);
-        });
-      };
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-      const fetchFootball = async () => {
-        setIsLoading(true);
-        axios.request(matchOptions)
-        .then(res => {
-          const footballData = res.data.data;
-          console.log(footballData);
-          setData(footballData)
-          setIsLoading(false);
-        })
-        .catch(error => {
-          console.error('Error occurred:', error.message);
-        });
-      };
-    
-      useEffect(() => {
-        fetchFootball();
-      }, []);
+  const matchOptions = {
+    method: 'GET',
+    url: 'https://api.sportmonks.com/v3/football/fixtures?include=participants',
+    headers: {
+      'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
+    }
+  };
+
+  const filterOptions = {
+    method: 'GET',
+    url: 'https://api.sportmonks.com/v3/football/fixtures/head-to-head/2650/86?include=participants',
+    headers: {
+      'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
+    }
+  };
+  
+  const handleMatchPress = (id) => {
+    navigation.navigate('MatchDetails', { id });
+    // console.log("presss", id )
+  };
+  
+  const felterFootball = async () => {
+    // console.log('hello');
+    setIsLoading(true);
+    axios.request(filterOptions)
+    .then(res => {
+      const footballData = res.data.data;
+      // console.log(footballData);
+      setData(footballData)
+      setIsLoading(false);
+    })
+    .catch(error => {
+      console.error('Error occurred:', error.message);
+    });
+  };
+
+  const fetchFootball = async () => {
+    setIsLoading(true);
+    axios.request(matchOptions)
+    .then(res => {
+      const footballData = res.data.data;
+      // console.log(footballData);
+      setData(footballData)
+      setIsLoading(false);
+    })
+    .catch(error => {
+      console.error('Error occurred:', error.message);
+    });
+  };
+
+  useEffect(() => {
+    fetchFootball();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -76,8 +76,7 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
             margin: 2,
             alignItems: 'center',
             justifyContent: 'center',
-            marginStart: 10
-           
+            marginStart: 10,
           }} 
           onPress={() => fetchFootball()}
         >
@@ -88,11 +87,10 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
             width:'40%',
             backgroundColor: 'gray', 
             borderRadius:12,
-            padding: 7,
+            padding: 6,
             margin: 2,
             alignItems: 'center',
             justifyContent: 'center',
-          
           }} 
           onPress={() => felterFootball()}
         >
@@ -146,7 +144,12 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
              <Button onPress={() => handleMatchPress(item.id)}>
                <Text style={{fontWeight: 'bold', fontSize:20}}>see details</Text>
              </Button>
-           
+
+              <View style={{}}>
+                <Button icon="heart" textColor="green" onPress={() => addToFavorite(item)}>
+                </Button>
+              </View>
+
            </View> 
             ))}
       </ScrollView>
@@ -155,7 +158,6 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
   )
 }
 
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
@@ -163,8 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  addToFavorites: (item) => dispatch({ type: 'ADD_FAVORITE', payload: item }),
-  removeFromFavorites: (item) => dispatch({ type: 'REMOVE_FAVORITE', payload: item })
-});
-export default connect(null, mapDispatchToProps)(HomeScreen); 
+export default HomeScreen; 

@@ -54,12 +54,13 @@ const WelcomeScreen = ({ navigation }) => {
 
             <Text
               style={{
-                fontSize: 14,
+                fontSize: 10,
                 color: '#000',
+                fontWeight:'bold',
                 textAlign: "center",
-                marginTop: 20,
+                marginTop: 30,
               }}>
-              bfurbubrubfuurbfurjnjn
+              Keep Updated With KickOff News...
             </Text>
           </View>
         </View>

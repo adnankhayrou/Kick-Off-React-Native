@@ -5,10 +5,8 @@ import { ActivityIndicator, Text } from 'react-native-paper'
 
 const PlayerDetails = ({ route, navigation }) => {
   const { id } = route.params;
-
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  
 
   const options = {
     method: 'GET',
@@ -22,7 +20,7 @@ const PlayerDetails = ({ route, navigation }) => {
     axios.request(options)
     .then(res => {
       const footballData = res.data.data;
-      console.log('in the details', footballData);
+      // console.log('in the details', footballData);
       setData(footballData)
       setIsLoading(false);
     })
@@ -122,14 +120,12 @@ const PlayerDetails = ({ route, navigation }) => {
         }}
       >
         <View style={{ width: "80%" }}>
-          {/* Player Informations Header */}
           <View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
             <Text style={{ marginTop: 20, fontWeight: 'bold', fontSize: 20 }}>
               Player Information
             </Text>
           </View>
 
-          {/* Individual Player Information Items */}
           {[
             { label: "First Name", value: data.firstname },
             { label: "Last Name", value: data.lastname },
@@ -141,7 +137,6 @@ const PlayerDetails = ({ route, navigation }) => {
             { label: "Gender", value: data.gender }
           ].map((item, index) => (
             <View key={index} style={{ marginVertical: 8 }}>
-              {/* Individual Player Information Item */}
               <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 5 }}>
                 <Text style={{ fontWeight: 'bold', color: 'black', fontSize: 15 }}>
                   {item.label}
@@ -154,7 +149,6 @@ const PlayerDetails = ({ route, navigation }) => {
             </View>
           ))}
 
-          {/* Button to See All Players */}
           <View style={{ marginVertical: 8, padding: 5 }}>
             <TouchableOpacity
               style={{
@@ -173,8 +167,6 @@ const PlayerDetails = ({ route, navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-
-
 
        </View>
 
