@@ -2,13 +2,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { ActivityIndicator, Button, Text } from 'react-native-paper';
 import {DataContext} from '../context/DataProvider';
+import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 
 const HomeScreen = ({ navigation }) => {
-  const { addToFavorite, loadFavorites} = useContext(DataContext);
+  const { addToFavorite, loadFavorites, favorites} = useContext(DataContext);
 
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
 
   const matchOptions = {
     method: 'GET',
@@ -62,6 +64,7 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     fetchFootball();
+    loadFavorites();
   }, []);
 
   return (
@@ -113,6 +116,13 @@ const HomeScreen = ({ navigation }) => {
              shadowOpacity: 1,
              shadowRadius: 50,
              elevation: 10,}}>
+
+              {favorites.some(favorite => favorite.id === item.id) && (
+               <View style={{marginStart: 360, marginTop: 6}}>
+                 <Ionicons name={'heart'} size={20} color="red" />
+               </View>
+              )}
+
              <View
                style={{
                  flexDirection: 'row',
@@ -137,18 +147,19 @@ const HomeScreen = ({ navigation }) => {
                ))}
              </View>
            
-             <View style={{ alignItems: 'center', justifyContent: 'center' , marginBottom: 8}}>
+             <View style={{ alignItems: 'center', justifyContent: 'center' , marginVertical: 10}}>
                <Text>{item.starting_at}</Text>
              </View>
-           
-             <Button onPress={() => handleMatchPress(item.id)}>
-               <Text style={{fontWeight: 'bold', fontSize:20}}>see details</Text>
-             </Button>
 
-              <View style={{}}>
-                <Button icon="heart" textColor="green" onPress={() => addToFavorite(item)}>
+              <View style={{ display:"flex", flexDirection:"row", justifyContent:'space-around'}}>
+                <Button style={{margin:6}} icon="eye"  textColor="purple" onPress={() => handleMatchPress(item.id)}>
+                  See Details
+                </Button>
+                <Button style={{margin:6}} icon="plus"  textColor="green" onPress={() => addToFavorite(item)}>
+                  Save Match
                 </Button>
               </View>
+
 
            </View> 
             ))}

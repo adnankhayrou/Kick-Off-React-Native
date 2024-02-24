@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
+import {DataContext} from '../context/DataProvider';
 
-const FavoriteScreen = () => (
-  <View>
-    <Text>Favorite Items:</Text>
-   
-  </View>
-);
+
+const FavoriteScreen = () => {
+  const { removeItem } = useContext(DataContext);
+  
+  return(
+      <View>
+        <Text>Favorite Items:</Text>
+      </View>
+  )};
 
 export default FavoriteScreen;

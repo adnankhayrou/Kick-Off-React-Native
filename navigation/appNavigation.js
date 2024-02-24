@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,6 +9,8 @@ import PlayersScreen from '../screens/PlayersScreen';
 import PlayerDetails from '../screens/PlayerDetails';
 import MatchDetails from '../screens/MatchDetails';
 import FavoriteScreen from '../screens/FavoriteScreen';
+import {DataContext} from '../context/DataProvider';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -25,6 +27,7 @@ const IconWithCount = ({ iconName, count }) => (
 );
 
 const AppNavigation = () => {
+  const {favorites} = useContext(DataContext);
   return (
     <Stack.Navigator>
       <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
@@ -36,7 +39,7 @@ const AppNavigation = () => {
             },
             headerLeft: () => null,
              headerRight: () => (
-              <IconWithCount iconName="save" count={3} />
+              <IconWithCount iconName="save" count={favorites.length} />
             ),}} />
       <Stack.Screen name="PlayerDetails" component={PlayerDetails} options={{
             headerTitle: 'Player Details',
