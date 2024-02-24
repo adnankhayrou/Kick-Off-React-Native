@@ -22,7 +22,7 @@ const HomeScreen = ({ navigation }) => {
 
   const filterOptions = {
     method: 'GET',
-    url: 'https://api.sportmonks.com/v3/football/fixtures/head-to-head/2650/86?include=participants',
+    url: 'https://api.sportmonks.com/v3/football/fixtures/head-to-head/2650/293?include=participants',
     headers: {
       'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
     }

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import {DataContext} from '../context/DataProvider';
 import { ActivityIndicator, Button } from 'react-native-paper';
 
@@ -55,12 +54,6 @@ const handleMatchPress = (id) => {
            shadowRadius: 50,
            elevation: 10,}}>
 
-            {/* {favorites.some(favorite => favorite.id === item.id) && (
-             <View style={{marginStart: 360, marginTop: 6}}>
-               <Ionicons name={'heart'} size={20} color="red" />
-             </View>
-            )} */}
-
            <View
              style={{
                flexDirection: 'row',
@@ -89,13 +82,12 @@ const handleMatchPress = (id) => {
              <Text>{item.starting_at}</Text>
            </View>
 
-            <View style={{ display:"flex", flexDirection:"row", justifyContent:'space-around'}}>
+            <View style={{ display:"flex", flexDirection:"row", justifyContent:'space-around', alignItems:'center'}}>
               <Button style={{margin:6}} icon="eye"  textColor="purple" onPress={() => handleMatchPress(item.id)}>
                 See Details
               </Button>
-              <Button style={{margin:6}} icon=""  textColor="red" onPress={() => removeItem(item)}>
+              <Button style={{margin:6}} icon="close"  textColor="red" onPress={() => removeItem(item)}>
                 Remove Match
-                <Ionicons name={'trash'} size={15} color="red" style={{}}/>
               </Button>
             </View>
             

@@ -42,7 +42,7 @@ const MatchDetails = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator style={{paddingTop: 350}} size="large" color="#0000ff" />
       ) : (
         <View >
           

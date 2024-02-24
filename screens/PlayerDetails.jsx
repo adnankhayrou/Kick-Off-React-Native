@@ -40,7 +40,7 @@ const PlayerDetails = ({ route, navigation }) => {
   return (
     <View>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator style={{paddingTop: 350}} size="large" color="#0000ff" />
       ) : (
     <View>
       <View style={{
