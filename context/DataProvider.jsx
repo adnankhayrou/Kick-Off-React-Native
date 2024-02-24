@@ -30,10 +30,10 @@ function DataProvider({ children }) {
   const removeItem = async (itemToRemove) => {
     try {
         let oldData = JSON.parse(await AsyncStorage.getItem('favorites')) || [];
-        const newData = oldData.filter(existingItem => existingItem.codeCog !== itemToRemove.codeCog);
+        const newData = oldData.filter(existingItem => existingItem.id !== itemToRemove.id);
         await AsyncStorage.setItem('favorites', JSON.stringify(newData));
         console.log('Match removed from favorites successfully.');
-        Alert.alert('Match removed from favorites successfully.');
+        // Alert.alert('Match removed from favorites successfully.');
     } catch (error) {
         console.error('Error removing from favorites:', error);
     }
