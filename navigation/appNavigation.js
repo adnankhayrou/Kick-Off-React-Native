@@ -38,8 +38,22 @@ const AppNavigation = () => {
              headerRight: () => (
               <IconWithCount iconName="save" count={3} />
             ),}} />
-      <Stack.Screen name="PlayerDetails" component={PlayerDetails} />
-      <Stack.Screen name="MatchDetails" component={MatchDetails} />
+      <Stack.Screen name="PlayerDetails" component={PlayerDetails} options={{
+            headerTitle: 'Player Details',
+            headerTitleStyle: {
+              fontSize: 24,
+              fontWeight: 'bold',
+              marginLeft:120 
+            },
+            headerLeft: () => null}}/>
+      <Stack.Screen name="MatchDetails" component={MatchDetails} options={{
+            headerTitle: 'Match Details',
+            headerTitleStyle: {
+              fontSize: 24,
+              fontWeight: 'bold',
+              marginLeft:120 
+            },
+            headerLeft: () => null}}/>
     </Stack.Navigator>
   );
 };

@@ -111,7 +111,10 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
         }}
       >
         {Array.isArray(data) && data.map((item) => (
-             <View key={item.id} style={{backgroundColor: 'white', borderBottomWidth: 1, borderBottomColor: 'gray', borderRadius: 10, marginBottom:10}}>
+             <View key={item.id} style={{backgroundColor: 'white', borderRadius: 10, marginBottom:10,shadowColor: '#000',
+             shadowOpacity: 1,
+             shadowRadius: 50,
+             elevation: 10,}}>
              <View
                style={{
                  flexDirection: 'row',
@@ -122,8 +125,7 @@ const HomeScreen = ({ addToFavorites, removeFromFavorites, isFavorite, navigatio
                
                {item.participants.map((team, index) => (
                  <React.Fragment key={team.id}>
-                   
-                   
+                     
                    {index !== 0 && <Text style={{ marginTop:30, fontWeight: 'bold', fontSize:22 }}>vs</Text>}
            
                    <View key={team.id} style={{ alignItems: 'center', marginTop:10 }}>

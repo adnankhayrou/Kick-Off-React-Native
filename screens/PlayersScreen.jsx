@@ -100,7 +100,11 @@ const PlayersScreen = ({navigation}) => {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
-                backgroundColor:'gray'
+                backgroundColor:'white',
+                shadowColor: 'black',
+                shadowOpacity: 2,
+                shadowRadius: 50,
+                elevation: 15,
               }}
             >
               <View style={{ width: "50%" }}>
@@ -117,7 +121,7 @@ const PlayersScreen = ({navigation}) => {
                     source={{ uri: item.image_path }}
                     style={{ width: 70, height: 70, borderRadius: 20 }}
                   />
-                  <Text style={{ color: 'white', fontSize: 15, marginLeft: 20 }}>
+                  <Text style={{ color: 'black', fontSize: 15, marginLeft: 20 }}>
                     {item.common_name}
                   </Text>
                 </View>
@@ -126,7 +130,7 @@ const PlayersScreen = ({navigation}) => {
               <View
                 style={{
                   width: "1%",
-                  borderColor: 'white',
+                  borderColor: 'gray',
                   borderEndWidth: 2,
                   borderRadius: 10,
                   height: "70%",
@@ -134,7 +138,7 @@ const PlayersScreen = ({navigation}) => {
               ></View>
               <Button  onPress={() => handlePlayerPress(item.id)}>
                 <View style={{ width: "40%" }}>
-                    <Text style={{ color: 'white', marginRight: 20, fontWeight: 'bold' }}>
+                    <Text style={{ color: 'black', marginRight: 20, fontWeight: 'bold' }}>
                     See Details
                     </Text>
                 </View>
