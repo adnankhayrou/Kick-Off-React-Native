@@ -7,7 +7,7 @@ import { ActivityIndicator, Button } from 'react-native-paper';
 
 const FavoriteScreen = ({navigation}) => {
 
-const { removeItem, loadFavorites } = useContext(DataContext);
+const { removeItem } = useContext(DataContext);
 const [data, setData] = useState([]);
 const [isLoading, setIsLoading] = useState(true);
 
@@ -15,33 +15,37 @@ const handleMatchPress = (id) => {
   navigation.navigate('MatchDetails', { id });
 };
 
-  useEffect(() => {
-    const fetchData = async () => {
-        try {
-            const getingData = await AsyncStorage.getItem('favorites');
-            if (getingData) {
-                const parsedData = JSON.parse(getingData);
-                setData(parsedData);
-                setIsLoading(false);
-            } else {
-                console.log('No favorites data found.');
-            }
-        } catch (error) {
-            console.error('Error fetching favorites:', error);
+const fetchData = async () => {
+    try {
+        const getingData = await AsyncStorage.getItem('favorites');
+        if (getingData) {
+            const parsedData = JSON.parse(getingData);
+            setData(parsedData);
+            setIsLoading(false);
+        } else {
+            console.log('No favorites data found.');
         }
-    };
+    } catch (error) {
+        console.error('Error fetching favorites:', error);
+    }
+};
 
-    fetchData();
-  }, [data]);
+useEffect(() => {
+  fetchData();
+}, [data]);
 
   
-  return(
+return(
     <View style={styles.container}>
     
     {isLoading ? (
       <ActivityIndicator style={{marginTop: 300}} size="large" color="#0000ff" />
     ) : (
-      
+      data.length == 0 ? (
+        <View style={{marginTop: 350, marginStart:100}}>
+          <Text style={{fontWeight:'bold'}}>You Have No Matchs Saved Yeet!</Text>
+        </View>
+      ) : (
     <ScrollView
       contentContainerStyle={{
         paddingHorizontal: 10,
@@ -94,6 +98,7 @@ const handleMatchPress = (id) => {
          </View> 
           ))}
     </ScrollView>
+      )
      )}
   </View>
 )};
