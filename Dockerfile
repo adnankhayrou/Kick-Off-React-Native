@@ -8,13 +8,15 @@ WORKDIR /app
 COPY package.json .
 
 # Install dependencies
-RUN npm install
+RUN npm install npm@latest
 
 # Copy the rest of the files
 COPY . .
 
 # Expose port
 EXPOSE 8081
+EXPOSE 8082
+EXPOSE 8083
 
 # Default command
-CMD ["npx", "expo"]
+CMD ["npm", "start"]

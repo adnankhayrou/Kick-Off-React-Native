@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Image, TouchableOpacity, View } from 'react-native'
+import { Image, TouchableOpacity, ImageBackground, View } from 'react-native'
 import { ActivityIndicator, Text } from 'react-native-paper'
 
 const PlayerDetails = ({ route, navigation }) => {
@@ -43,6 +43,15 @@ const PlayerDetails = ({ route, navigation }) => {
         <ActivityIndicator style={{paddingTop: 350}} size="large" color="#0000ff" />
       ) : (
     <View>
+      <ImageBackground source={{ uri: data.nationality.image_path }} style={{ borderRadius: 10, overflow: 'hidden', shadowColor: '#000',
+          shadowOpacity: 1,
+          shadowRadius: 50,
+          elevation: 10,
+          padding: 5,
+          margin: 5,
+          marginVertical: 6,
+          width: 400,
+          height: 180,}}>
       <View style={{
           padding: 5,
           margin: 5,
@@ -50,57 +59,31 @@ const PlayerDetails = ({ route, navigation }) => {
           height: 180,
           marginTop: 25,
           overflow: "hidden",
-          borderRadius: 10,
-          borderWidth: 1,
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          backgroundColor:'black',
-          shadowColor: 'black',
-          shadowOpacity: 1,
-          shadowRadius: 50,
-          elevation: 10,
         }}
       >
         <View style={{ width: "55%" }}>
           <View
             style={{
-              display: "flex",
+              flex: 1,
               flexDirection: "row",
               alignItems: "center",
               padding: 5,
-              marginLeft: 20,
+              marginLeft: 6,
             }}
           >
             <Image
               source={{ uri: data.image_path }}
-              style={{ width: 70, height: 70, borderRadius: 20 }}
+              style={{ width: 90, height: 90, borderRadius: 20 }}
             />
-            <Text style={{ color: 'white', fontSize: 15, marginLeft: 20 }}>
-              {data.common_name}
-            </Text>
           </View>
         </View>
 
-        <View
-          style={{
-            width: "1%",
-            borderColor: 'white',
-            borderEndWidth: 2,
-            borderRadius: 10,
-            height: "70%",
-          }}
-        ></View>
-
-        <View style={{ width: "40%"}}>
-          <Image
-              source={{ uri: data.nationality.image_path }}
-              style={{ width: 50, height: 50, borderRadius: 20, marginLeft: 50}}
-            />
-        </View>
       </View>
-
+      </ImageBackground>
       <View
         style={{
           padding: 5,
@@ -129,6 +112,7 @@ const PlayerDetails = ({ route, navigation }) => {
           {[
             { label: "First Name", value: data.firstname },
             { label: "Last Name", value: data.lastname },
+            { label: "Common Name", value: data.common_name },
             { label: "Country", value: data.nationality.name },
             { label: "Position", value: data.position?.name },
             { label: "Height", value: `${data.height} cm` },
