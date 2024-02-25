@@ -1,1 +1,1 @@
-# Kick-Off-React-Native
+# Check Wiki For KickOff Usage
