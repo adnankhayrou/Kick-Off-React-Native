@@ -12,7 +12,7 @@ const MatchDetails = ({ route, navigation }) => {
 
   const options = {
     method: 'GET',
-    url: `https://api.sportmonks.com/v3/football/fixtures/${id}?include=league;participants;venue;league`,
+    url: `https://api.sportmonks.com/v3/football/fixtures/${id}?include=league;participants;venue`,
     headers: {
       'authorization': 'GLAB8uX2Q6e574s1cIvoJKuH7i3loCiRwUMrApyw7pp1xzUp47RBmJt35abe'
     }
@@ -46,7 +46,7 @@ const MatchDetails = ({ route, navigation }) => {
       ) : (
         <View >
           
-          <ImageBackground source={require("../assets/images/stadium.jpg")} style={{ margin:5, borderRadius: 10, overflow: 'hidden', shadowColor: '#000',
+          <ImageBackground source={data.venue.image_path ? { uri: data.venue.image_path } : require("../assets/images/stadium.jpg")} style={{ margin:5, borderRadius: 10, overflow: 'hidden', shadowColor: '#000',
               shadowOpacity: 1,
               shadowRadius: 50,
               elevation: 10,}}>

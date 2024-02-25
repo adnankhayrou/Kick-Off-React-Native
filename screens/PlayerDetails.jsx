@@ -130,7 +130,7 @@ const PlayerDetails = ({ route, navigation }) => {
             { label: "First Name", value: data.firstname },
             { label: "Last Name", value: data.lastname },
             { label: "Country", value: data.nationality.name },
-            { label: "Position", value: data.position.name },
+            { label: "Position", value: data.position?.name },
             { label: "Height", value: `${data.height} cm` },
             { label: "Weight", value: `${data.weight} kg` },
             { label: "Date of Birth", value: data.date_of_birth },
